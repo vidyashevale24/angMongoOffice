@@ -6,7 +6,8 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = "/api";
+//const apiUrl = "/api";
+const apiUrl =  'assets/config.json';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ const apiUrl = "/api";
 export class ApiService {
 
   constructor(private http: HttpClient) { }
+
+  getConfig() {
+    return this.http.get(this.apiUrl);
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -36,6 +41,7 @@ export class ApiService {
   }
 
   getBooks(): Observable<any> {
+    console.log("here")
     return this.http.get(apiUrl, httpOptions).pipe(
         map(this.extractData),
         catchError(this.handleError));
@@ -43,6 +49,7 @@ export class ApiService {
 
   getBook(id: string): Observable<any> {
     const url = `${apiUrl}/${id}`;
+    console.log(url);
     return this.http.get(url, httpOptions).pipe(
         map(this.extractData),
         catchError(this.handleError));

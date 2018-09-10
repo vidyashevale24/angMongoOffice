@@ -9,22 +9,34 @@ import { Observable } from 'rxjs';
   styleUrls: ['./book.component.css']
 })
 export class BookComponent implements OnInit {
-  books: any;
+
+    books: any;
     displayedColumns = ['isbn', 'title', 'author'];
     dataSource = new BookDataSource(this.api);
-  constructor(private api: ApiService) { }
 
-  ngOnInit() {
-    this.api.getBooks()
-        .subscribe(res => {
-          console.log(res);
-          this.books = res;
-        }, err => {
-          console.log(err);
+    constructor(private api: ApiService) { }
+
+
+    ngOnInit() {
+
+
+        this.api.getBooks()
+            .subscribe(res => {
+                console.log(res);
+                    this.books = res;
+                }, err => {
+                    console.log(err);
+                });
+        }
+    }
+
+    showConfig() {
+    this.apiService.getConfig()
+        .subscribe((data: Config) => this.config = {
+            heroesUrl: data['heroesUrl'],
+            textfile:  data['textfile']
         });
-  }
- }
-
+    }
 export class BookDataSource extends DataSource<any> {
     constructor(private api: ApiService) {
         super()
@@ -38,4 +50,3 @@ export class BookDataSource extends DataSource<any> {
 
     }
 }
-
