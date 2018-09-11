@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
@@ -30,13 +31,7 @@ export class BookComponent implements OnInit {
         }
     }
 
-    showConfig() {
-    this.apiService.getConfig()
-        .subscribe((data: Config) => this.config = {
-            heroesUrl: data['heroesUrl'],
-            textfile:  data['textfile']
-        });
-    }
+
 export class BookDataSource extends DataSource<any> {
     constructor(private api: ApiService) {
         super()
