@@ -6,8 +6,9 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-  //const apiUrl = "http://localhost:3000/api";
-  const apiUrl =  'assets/config.json';
+  const apiUrl = "http://localhost:3000/api";
+  //const apiUrl = "/api";
+  //const apiUrl =  'assets/config.json';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class ApiService {
   }
 
   getBooks(): Observable<any> {
+    console.log('Get books function')
     return this.http.get(apiUrl, httpOptions).pipe(
         map(this.extractData),
         catchError(this.handleError));

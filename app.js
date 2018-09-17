@@ -3,20 +3,21 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cors = require('cors');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/angMongoOffice')
+    .then(() =>  console.log('connection succesful'))
+    .catch((err) => console.error(err));
 
 var apiRouter = require('./routes/book');
 
 var app = express();
 
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/angMongoOffice', { promiseLibrary: require('bluebird') })
-    .then(() =>  console.log('connection successful'))
-    .catch((err) => console.error(err));
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'dist/angMongoOffice')));
 app.use('/', express.static(path.join(__dirname, 'dist/angMongoOffice')));
 app.use('/api', apiRouter);
